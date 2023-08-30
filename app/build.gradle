@@ -1,0 +1,119 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id("com.google.dagger.hilt.android")
+}
+
+android {
+    namespace 'com.example.gifimagesearch'
+    compileSdk 34
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.3.2"
+    }
+
+    defaultConfig {
+        applicationId "com.example.gifimagesearch"
+        minSdk 23
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "com.example.gifimagesearch.testrunner.CustomTestRunner"
+
+        buildConfigField "String", "GIPHY_API_KEY", "\"${project.giphy_apikey}\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.fragment:fragment-ktx:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    //implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    //implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'io.coil-kt:coil-compose:2.4.0'
+
+    def composeBom = platform('androidx.compose:compose-bom:2023.08.00')
+    implementation composeBom
+
+    implementation 'androidx.compose.material3:material3:1.1.1'
+
+    implementation 'androidx.compose.ui:ui:1.6.0-alpha04'
+
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+
+    // Android Studio Preview support
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+
+    // Optional - Included automatically by material, only add when you need
+    // the icons but not the material library (e.g. when using Material3 or a
+    // custom design system based on Foundation)
+    implementation 'androidx.compose.material:material-icons-core'
+    // Optional - Add full set of material icons
+    implementation 'androidx.compose.material:material-icons-extended'
+    // Optional - Add window size utils
+    implementation 'androidx.compose.material3:material3-window-size-class'
+
+    // Optional - Integration with activities
+    implementation 'androidx.activity:activity-compose:1.7.2'
+    // Optional - Integration with ViewModels
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1'
+    // Optional - Integration with LiveData
+    implementation 'androidx.compose.runtime:runtime-livedata:1.5.0'
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
+
+    implementation("io.coil-kt:coil-gif:2.4.0")
+
+    //////////// DI
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
+
+    //////////// PAGING
+    implementation "androidx.paging:paging-runtime:3.2.0"
+    implementation "androidx.paging:paging-compose:3.2.0"
+
+    ///////////// NAVIGATION
+    def nav_version = "2.7.1"
+    implementation "androidx.navigation:navigation-compose:$nav_version"
+
+    ///////////////////////// UNIT TESTS
+    testImplementation 'junit:junit:4.13.2'
+    // UI Tests
+    androidTestImplementation composeBom
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
+    debugImplementation 'androidx.compose.ui:ui-test-manifest'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // dagger hilt test
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.5.0"
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.44'
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.44'
+}
